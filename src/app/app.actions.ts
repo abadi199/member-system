@@ -1,0 +1,23 @@
+import { Action } from "@ngrx/store";
+import { Member } from "./models/member";
+
+export enum AppActionType {
+    Search = '[App] Search',
+    SearchCompleted = '[App] Search Completed',
+}
+
+export class Search implements Action {
+    readonly type = AppActionType.Search
+
+    constructor(public payload: string) {}
+}
+
+export class SearchCompleted implements Action {
+    readonly type = AppActionType.SearchCompleted
+
+    constructor(public payload: Member[]) {}
+}
+
+export type AppActionsUnion =
+    | Search 
+    | SearchCompleted

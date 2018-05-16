@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
+import { SearchFormComponent } from './search-form/search-form.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: 
+  `<h1>{{title}}</h1>
+  <search-form></search-form>
+  <search-result></search-result>
+  `
 })
 export class AppComponent {
-  title = 'app';
+  title = 'Member Search';
 }
