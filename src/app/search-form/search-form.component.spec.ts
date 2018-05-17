@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchFormComponent } from './search-form.component';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from '../app.reducer';
 
 describe('SearchFormComponent', () => {
   let component: SearchFormComponent;
@@ -8,9 +10,10 @@ describe('SearchFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchFormComponent ]
+      declarations: [SearchFormComponent],
+      imports: [StoreModule.forRoot({ appStore: reducer })]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

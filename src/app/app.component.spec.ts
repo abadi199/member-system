@@ -4,6 +4,7 @@ import { SearchFormComponent } from './search-form/search-form.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './app.reducer';
+import { MemberTableComponent } from './member-table/member-table.component';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -11,8 +12,9 @@ describe('AppComponent', () => {
         AppComponent,
         SearchFormComponent,
         SearchResultComponent,
+        MemberTableComponent,
       ],
-      imports: [ StoreModule.forRoot({ appStore: reducer })]
+      imports: [StoreModule.forRoot({ appStore: reducer })]
     }).compileComponents();
   }));
   it('should create the app', async(() => {
