@@ -40,11 +40,3 @@ export function error<e>(value: e): Error<e> {
 }
 
 export type RemoteData<data, e> = NotAsked | Loading | Success<data> | Error<e>;
-
-class True {}
-class False {}
-
-export type Bool = True | False;
-
-let isLoading: Bool;
-isLoading = True;
