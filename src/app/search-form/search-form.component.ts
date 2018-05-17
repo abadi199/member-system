@@ -5,7 +5,6 @@ import { Observable } from "rxjs";
 import { AppActionType } from "../app.actions";
 import { MemberService } from "../services/members.service";
 
-// TODO what does the async option mean??
 @Component({
   selector: "app-search-form",
   template: `
