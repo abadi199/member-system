@@ -3,7 +3,7 @@ import { Store, select } from "@ngrx/store";
 import { State } from "../app.reducer";
 import { Observable } from "rxjs";
 import { AppActionType } from "../app.actions";
-import { MemberService } from "../services/member.service";
+import { MemberService } from "../services/members.service";
 
 // TODO what does the async option mean??
 @Component({
@@ -11,9 +11,9 @@ import { MemberService } from "../services/member.service";
   template: `
     <div>
       <input placeholder="Search" (keyup.enter)="search($event)">
-      <div *ngIf="(searchingState | async)['isSearching']" class="loader">
+      <div *ngIf="isSearching" class="loader">
       </div>
-      <p>{{ (searchingState | async)['isSearching'] ? "Searching" : "Not Searching" }}</p>
+      <p>{{ isSearching ? "Searching" : "Not Searching" }}</p>
     </div>
   `,
   styles: [
@@ -35,13 +35,17 @@ import { MemberService } from "../services/member.service";
   ]
 })
 export class SearchFormComponent implements OnInit {
-  private searchingState: Observable<State>;
+  private observableState: Observable<State>;
+  private isSearching = false;
 
   constructor(
     private store: Store<State>,
     private memberService: MemberService
   ) {
-    this.searchingState = store.pipe(select("appStore"));
+    this.observableState = store.pipe(select("appStore"));
+    this.observableState.subscribe(state => {
+      this.isSearching = state.isSearching;
+    });
   }
 
   ngOnInit() {}

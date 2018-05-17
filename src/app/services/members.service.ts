@@ -2,17 +2,7 @@ import { Injectable } from "@angular/core";
 import { Member } from "../models/member";
 import { Observable, of } from "rxjs";
 import { delay, catchError } from "rxjs/operators";
-
-const mockMembers = [
-  {
-    firstName: "Will",
-    lastName: "Farrell"
-  },
-  {
-    firstName: "Abadi",
-    lastName: "Kurniawan"
-  }
-];
+import { mockMembers } from "./members.fixture";
 
 @Injectable({
   providedIn: "root"

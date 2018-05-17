@@ -10,7 +10,7 @@ import { reducer } from "./app.reducer";
 @NgModule({
   declarations: [AppComponent, SearchFormComponent, SearchResultComponent],
   imports: [BrowserModule, StoreModule.forRoot({ appStore: reducer })],
-  providers: [], 
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
