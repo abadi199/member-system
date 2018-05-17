@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchResultComponent } from './search-result.component';
+import { MemberTableComponent } from '../member-table/member-table.component';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from '../app.reducer';
 
 describe('SearchResultComponent', () => {
   let component: SearchResultComponent;
@@ -8,9 +11,10 @@ describe('SearchResultComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchResultComponent ]
+      declarations: [SearchResultComponent, MemberTableComponent],
+      imports: [StoreModule.forRoot({ appStore: reducer })]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
