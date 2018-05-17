@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from "@angular/core";
+import { Member } from "../models/member";
+import { MemberTableComponent } from "../member-table/member-table.component";
 
 @Component({
-  selector: 'search-result',
+  selector: "app-search-result",
   template: `
-    <p>
-      search-result works!
-    </p>
+  <app-member-table *ngIf="members.length" [members]="members"></app-member-table>
   `,
   styles: []
 })
 export class SearchResultComponent implements OnInit {
+  @Input() members: Member[] = [];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
