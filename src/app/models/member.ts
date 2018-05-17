@@ -1,4 +1,4 @@
 export interface Member {
-    firstName: string;
-    lastName: string;   
+  firstName: string;
+  lastName: string;
 }
