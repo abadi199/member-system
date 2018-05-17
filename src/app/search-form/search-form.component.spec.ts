@@ -1,10 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SearchFormComponent } from './search-form.component';
-import { StoreModule } from '@ngrx/store';
-import { reducer } from '../app.reducer';
+import { SearchFormComponent } from "./search-form.component";
+import { StoreModule } from "@ngrx/store";
+import { reducer } from "../app.reducer";
 
-describe('SearchFormComponent', () => {
+describe("SearchFormComponent", () => {
   let component: SearchFormComponent;
   let fixture: ComponentFixture<SearchFormComponent>;
 
@@ -12,8 +12,7 @@ describe('SearchFormComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SearchFormComponent],
       imports: [StoreModule.forRoot({ appStore: reducer })]
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -22,7 +21,7 @@ describe('SearchFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -22,7 +22,7 @@ import { Member } from "../models/member";
 export class MemberTableComponent implements OnInit {
   @Input() members: Member[];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 }
