@@ -28,6 +28,6 @@ export class MemberService {
         }
 
 
-        return of(mockMembers.filter(containsFirstName)).pipe(delay(5000))
+        return of(mockMembers.filter(containsFirstName)).pipe(delay(3000))
     }
 }
