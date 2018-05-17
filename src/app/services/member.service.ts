@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Member } from '../models/member';
 import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 const mockMembers = [ {
     firstName: 'Will',
@@ -26,6 +27,7 @@ export class MemberService {
             return element.firstName.includes(firstName)
         }
 
-        return of(mockMembers.filter(containsFirstName))
+
+        return of(mockMembers.filter(containsFirstName)).pipe(delay(5000))
     }
 }
