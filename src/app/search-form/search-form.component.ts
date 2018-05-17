@@ -15,18 +15,10 @@ import { MemberService } from "../services/members.service";
   styles: []
 })
 export class SearchFormComponent implements OnInit {
-  private observableState: Observable<State>;
-  private isSearching = false;
-
   constructor(
     private store: Store<State>,
     private memberService: MemberService
-  ) {
-    this.observableState = store.pipe(select("appStore"));
-    this.observableState.subscribe(state => {
-      this.isSearching = state.isSearching;
-    });
-  }
+  ) {}
 
   ngOnInit() {}
 
