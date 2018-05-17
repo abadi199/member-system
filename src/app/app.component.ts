@@ -7,10 +7,9 @@ import { Member } from "./models/member";
   selector: "app-root",
   template: `<h1>{{title}}</h1>
   <search-form></search-form>
-  <app-search-result [members]="members"></app-search-result>
+  <app-search-result></app-search-result>
   `
 })
 export class AppComponent {
   title = "Member Search";
-  members: Member[] = [{ firstName: "Abadi", lastName: "Kurniawan" }];
 }
