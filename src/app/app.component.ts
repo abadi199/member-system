@@ -4,9 +4,9 @@ import { SearchResultComponent } from './search-result/search-result.component';
 
 @Component({
   selector: 'app-root',
-  template: 
+  template:
   `<h1>{{title}}</h1>
-  <search-form></search-form>
+  <app-search-form></app-search-form>
   <search-result></search-result>
   `
 })

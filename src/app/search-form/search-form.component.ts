@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Component, OnInit } from "@angular/core";
+import { Store, select } from "@ngrx/store";
 import { State } from "../app.reducer";
-import { Observable } from 'rxjs'
-import { AppActionType } from '../app.actions';
-import { MemberService } from '../services/member.service';
+import { Observable } from "rxjs";
+import { AppActionType } from "../app.actions";
+import { MemberService } from "../services/member.service";
 
-
-//TODO what does the async option mean??
+// TODO what does the async option mean??
 @Component({
-  selector: 'search-form',
+  selector: "app-search-form",
   template: `
     <div>
       <input placeholder="Search" (keyup.enter)="search($event)">
@@ -27,7 +26,7 @@ import { MemberService } from '../services/member.service';
       height: 50px;
       animation: spin 2s linear infinite;
   }
-  
+
   @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
@@ -38,18 +37,22 @@ import { MemberService } from '../services/member.service';
 export class SearchFormComponent implements OnInit {
   private searchingState: Observable<State>;
 
-  constructor(private store: Store<State>, private memberService: MemberService) { 
-    this.searchingState = store.pipe(select('appStore'));
+  constructor(
+    private store: Store<State>,
+    private memberService: MemberService
+  ) {
+    this.searchingState = store.pipe(select("appStore"));
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  search($event){
-    this.store.dispatch({ type: AppActionType.Search});
+  search($event) {
+    this.store.dispatch({ type: AppActionType.Search });
     this.memberService.searchMembers($event.target.value).subscribe(result => {
-      this.store.dispatch({ type: AppActionType.SearchCompleted, payload: result})
-    })
+      this.store.dispatch({
+        type: AppActionType.SearchCompleted,
+        payload: result
+      });
+    });
   }
-
 }
