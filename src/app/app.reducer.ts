@@ -18,7 +18,7 @@ export function reducer(state = initialState, action: AppActionsUnion): State {
       return { ...state, isSearching: true };
     }
     case AppActionType.SearchCompleted: {
-      return { isSearching: false, searchResult: action.payload }
+      return { isSearching: false, searchResult: action.payload };
     }
   }
 
