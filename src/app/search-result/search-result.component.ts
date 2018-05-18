@@ -6,14 +6,26 @@ import { Store, select } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { RemoteData, notAsked, RemoteDataKind } from "../util/remote-data";
 
+const memberTemplate = `
+      <div *ngIf="!members.value.length">No members found</div>
+      <app-member-table *ngIf="members.value.length" [members]="members.value"></app-member-table>
+`;
 @Component({
   selector: "app-search-result",
   template: `
   <div [ngSwitch]="members.kind">
-    <div *ngSwitchCase="'${RemoteDataKind.Loading}'">Loading...</div>
-    <div *ngSwitchCase="'${RemoteDataKind.Success}'">
-      <div *ngIf="!members.value.length">No members found</div>
-      <app-member-table *ngIf="members.value.length" [members]="members.value"></app-member-table>
+    <div *ngSwitchCase="${
+      RemoteDataKind.Loading
+    }"><app-loading-indicator></app-loading-indicator></div>
+    <div *ngSwitchCase="${RemoteDataKind.Reloading}">
+      <app-loading-indicator></app-loading-indicator>
+      ${memberTemplate}
+    </div>
+    <div *ngSwitchCase="${RemoteDataKind.Success}">
+      ${memberTemplate}
+    </div>
+    <div *ngSwitchCase="${RemoteDataKind.Error}">
+      <div class="error">{{members.error}}</div>
     </div>
   </div>
   `,
