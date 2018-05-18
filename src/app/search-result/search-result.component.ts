@@ -14,9 +14,8 @@ const memberTemplate = `
   selector: "app-search-result",
   template: `
   <div [ngSwitch]="members.kind">
-    <div *ngSwitchCase="${
-      RemoteDataKind.Loading
-    }"><app-loading-indicator></app-loading-indicator></div>
+    <div *ngSwitchCase="${RemoteDataKind.Loading}">
+      <app-loading-indicator></app-loading-indicator></div>
     <div *ngSwitchCase="${RemoteDataKind.Reloading}">
       <app-loading-indicator></app-loading-indicator>
       ${memberTemplate}
