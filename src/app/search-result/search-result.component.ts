@@ -23,6 +23,10 @@ const memberTemplate = `
     <div *ngSwitchCase="${RemoteDataKind.Success}">
       ${memberTemplate}
     </div>
+    <div *ngSwitchCase="${RemoteDataKind.ErrorWithData}">
+      ${memberTemplate}
+      <div class="error">{{members.error}}</div>
+    </div>
     <div *ngSwitchCase="${RemoteDataKind.Error}">
       <div class="error">{{members.error}}</div>
     </div>

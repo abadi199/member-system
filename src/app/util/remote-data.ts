@@ -30,9 +30,6 @@ class Loading {
   hasData = () => false;
 }
 const loadingConst = new Loading();
-export function loading(): Loading {
-  return loadingConst;
-}
 
 class Reloading<data> {
   readonly kind = RemoteDataKind.Reloading;
@@ -40,18 +37,18 @@ class Reloading<data> {
   hasData = () => true;
   constructor(public value: data) {}
 }
-export function reloading<data, e>(
+export function loading<data, e>(
   remoteData: RemoteData<data, e>
-): RemoteData<data, e> {
+): Loading | Reloading<data> {
   switch (remoteData.kind) {
     case RemoteDataKind.Error:
-      return loading();
+      return loadingConst;
     case RemoteDataKind.ErrorWithData:
       return new Reloading(remoteData.value);
     case RemoteDataKind.Loading:
       return remoteData;
     case RemoteDataKind.NotAsked:
-      return loading();
+      return loadingConst;
     case RemoteDataKind.Reloading:
       return remoteData;
     case RemoteDataKind.Success:
@@ -76,9 +73,6 @@ class Error<e> {
   // tslint:disable-next-line:no-shadowed-variable
   constructor(public error: e) {}
 }
-export function error<e>(value: e): Error<e> {
-  return new Error(value);
-}
 
 class ErrorWithData<e, data> {
   readonly kind = RemoteDataKind.ErrorWithData;
@@ -87,9 +81,25 @@ class ErrorWithData<e, data> {
   // tslint:disable-next-line:no-shadowed-variable
   constructor(public error: e, public value: data) {}
 }
-// tslint:disable-next-line:no-shadowed-variable
-export function errorWithData<e, data>(error: e, value: data) {
-  return new ErrorWithData(error, value);
+export function error<e, data>(
+  remoteData: RemoteData<data, e>,
+  // tslint:disable-next-line:no-shadowed-variable
+  error: e
+): Error<e> | ErrorWithData<e, data> {
+  switch (remoteData.kind) {
+    case RemoteDataKind.Error:
+      return new Error(error);
+    case RemoteDataKind.ErrorWithData:
+      return new ErrorWithData(error, remoteData.value);
+    case RemoteDataKind.Loading:
+      return new Error(error);
+    case RemoteDataKind.NotAsked:
+      return new Error(error);
+    case RemoteDataKind.Reloading:
+      return new ErrorWithData(error, remoteData.value);
+    case RemoteDataKind.Success:
+      return new ErrorWithData(error, remoteData.value);
+  }
 }
 
 export type RemoteData<data, e> =
