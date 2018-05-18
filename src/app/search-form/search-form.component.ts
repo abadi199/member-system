@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Store, select } from "@ngrx/store";
 import { State } from "../app.reducer";
 import { Observable } from "rxjs";
-import { AppActionType, Search } from "../app.actions";
+import { SearchCompleted, Search } from "../app.actions";
 import { MemberService } from "../services/members.service";
 import { success } from "../util/remote-data";
 @Component({
@@ -32,10 +32,8 @@ export class SearchFormComponent implements OnInit {
     if (firstName.length > 1) {
       this.store.dispatch(new Search(firstName));
       this.memberService.searchMembers(firstName).subscribe(result => {
-        this.store.dispatch({
-          type: AppActionType.SearchCompleted,
-          payload: success(result)
-        });
+        this.store.dispatch(new SearchCompleted(success(result)));
+      });
     }
   }
 }
