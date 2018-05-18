@@ -4,7 +4,7 @@ import { State } from "../app.reducer";
 import { Observable } from "rxjs";
 import { AppActionType } from "../app.actions";
 import { MemberService } from "../services/members.service";
-
+import { success } from "../util/remote-data";
 @Component({
   selector: "app-search-form",
   template: `
@@ -27,7 +27,7 @@ export class SearchFormComponent implements OnInit {
     this.memberService.searchMembers($event.target.value).subscribe(result => {
       this.store.dispatch({
         type: AppActionType.SearchCompleted,
-        payload: result
+        payload: success(result)
       });
     });
   }
