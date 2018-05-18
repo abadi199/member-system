@@ -1,24 +1,23 @@
 import { Action } from "@ngrx/store";
-import { Member } from "./models/member";
 import { AppActionsUnion, AppActionType } from "./app.actions";
+import { Member } from "./models/member";
+import { RemoteData, notAsked, error, loading } from "./util/remote-data";
 
 export interface State {
-  isSearching: boolean;
-  searchResult: Member[];
+  searchResult: RemoteData<Member[], string>;
 }
 
 const initialState: State = {
-  isSearching: false,
-  searchResult: []
+  searchResult: notAsked()
 };
 
 export function reducer(state = initialState, action: AppActionsUnion): State {
   switch (action.type) {
     case AppActionType.Search: {
-      return { ...state, isSearching: true };
+      return { ...state, searchResult: loading(state.searchResult) };
     }
     case AppActionType.SearchCompleted: {
-      return { isSearching: false, searchResult: action.payload };
+      return { ...state, searchResult: action.payload };
     }
   }
 
