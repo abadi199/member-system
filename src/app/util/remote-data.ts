@@ -38,8 +38,11 @@ class Reloading<data> {
   constructor(public value: data) {}
 }
 export function loading<data, e>(
-  remoteData: RemoteData<data, e>
+  remoteData: RemoteData<data, e> | null = null
 ): Loading | Reloading<data> {
+  if (remoteData === null) {
+    return loadingConst;
+  }
   switch (remoteData.kind) {
     case RemoteDataKind.Error:
       return loadingConst;
@@ -82,10 +85,13 @@ class ErrorWithData<e, data> {
   constructor(public error: e, public value: data) {}
 }
 export function error<e, data>(
-  remoteData: RemoteData<data, e>,
   // tslint:disable-next-line:no-shadowed-variable
-  error: e
+  error: e,
+  remoteData: RemoteData<data, e> | null = null
 ): Error<e> | ErrorWithData<e, data> {
+  if (remoteData === null) {
+    return new Error(error);
+  }
   switch (remoteData.kind) {
     case RemoteDataKind.Error:
       return new Error(error);
