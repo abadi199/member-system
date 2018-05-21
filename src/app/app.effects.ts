@@ -17,11 +17,11 @@ export class AppEffects {
   @Effect()
   search$: Observable<Action> = this.actions$.pipe(
     ofType<Search>(AppActionType.Search),
-    mergeMap(action =>
-      this.memberService
+    mergeMap(action => {
+      return this.memberService
         .searchMembers(action.payload)
-        .pipe(map(result => new SearchCompleted(success(result))))
-    )
+        .pipe(map(result => new SearchCompleted(success(result))));
+    })
   );
 
   constructor(
