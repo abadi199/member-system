@@ -6,7 +6,7 @@ import { reducer, State } from "../app.reducer";
 import { AppActionsUnion, Search } from "../app.actions";
 import { Component } from "@angular/core";
 
-fdescribe("SearchFormComponent", () => {
+describe("SearchFormComponent", () => {
   let component: SearchFormComponent;
   let fixture: ComponentFixture<SearchFormComponent>;
   let store: Store<State>;
