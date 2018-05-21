@@ -6,8 +6,9 @@ import { LoadingIndicatorComponent } from "../loading-indicator/loading-indicato
 import { StoreModule, Store, select } from "@ngrx/store";
 import { reducer, State, initialState } from "../app.reducer";
 import { Observable, of, BehaviorSubject } from "rxjs";
-import { loading, notAsked, success } from "../util/remote-data";
+import { loading, notAsked, success, error } from "../util/remote-data";
 import { map } from "rxjs/operators";
+import { Member } from "../models/member";
 
 describe("SearchResultComponent", () => {
   let component: SearchResultComponent;
@@ -40,19 +41,61 @@ describe("SearchResultComponent", () => {
     expect(component).toBeTruthy();
   });
   it("should show no members found", () => {
-    const state: State = { ...initialState, searchResult: success([]) };
-    state$.next(state);
+    state$.next({ ...initialState, searchResult: success([]) });
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector("div").textContent).toContain(
-      "No members found"
-    );
+    expect(compiled.textContent).toContain("No members found");
   });
   it("should show loading indicator", () => {
-    const state: State = { ...initialState, searchResult: loading() };
-    state$.next(state);
+    state$.next({ ...initialState, searchResult: loading() });
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector("p").textContent).toContain("Loading...");
+    expect(compiled.textContent).toContain("Loading...");
+  });
+  it("should show loading indicator and data", () => {
+    const member: Member = { firstName: "Abadi", lastName: "Kurniawan" };
+    state$.next({
+      ...initialState,
+      searchResult: loading(success([member]))
+    });
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.textContent).toContain("Loading...");
+    expect(compiled.textContent).toContain(member.firstName);
+    expect(compiled.textContent).toContain(member.lastName);
+  });
+  it("should show data", () => {
+    const member: Member = { firstName: "Abadi", lastName: "Kurniawan" };
+    state$.next({
+      ...initialState,
+      searchResult: success([member])
+    });
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.textContent).toContain(member.firstName);
+    expect(compiled.textContent).toContain(member.lastName);
+  });
+  it("should show error message", () => {
+    const errorMessage = "Error searching member";
+    state$.next({
+      ...initialState,
+      searchResult: error(errorMessage)
+    });
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.textContent).toContain(errorMessage);
+  });
+  it("should show error message and data", () => {
+    const errorMessage = "Error searching member";
+    const member: Member = { firstName: "Abadi", lastName: "Kurniawan" };
+    state$.next({
+      ...initialState,
+      searchResult: error(errorMessage, loading(success([member])))
+    });
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.textContent).toContain(errorMessage);
+    expect(compiled.textContent).toContain(member.firstName);
+    expect(compiled.textContent).toContain(member.lastName);
   });
 });
