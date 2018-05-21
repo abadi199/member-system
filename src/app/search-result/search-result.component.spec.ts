@@ -12,6 +12,7 @@ import { Member } from "../models/member";
 
 describe("SearchResultComponent", () => {
   let component: SearchResultComponent;
+  let compiled: HTMLElement;
   let fixture: ComponentFixture<SearchResultComponent>;
   let store: Store<State>;
   const state$ = new BehaviorSubject(initialState);
@@ -32,6 +33,7 @@ describe("SearchResultComponent", () => {
 
     fixture = TestBed.createComponent(SearchResultComponent);
     component = fixture.componentInstance;
+    compiled = fixture.debugElement.nativeElement;
     fixture.detectChanges();
   }));
 
@@ -43,14 +45,12 @@ describe("SearchResultComponent", () => {
   it("should show no members found", () => {
     state$.next({ ...initialState, searchResult: success([]) });
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
     expect(compiled.textContent).toContain("No members found");
   });
   it("should show loading indicator", () => {
     state$.next({ ...initialState, searchResult: loading() });
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.textContent).toContain("Loading...");
+    expect(compiled.querySelector("app-loading-indicator")).not.toBeNull();
   });
   it("should show loading indicator and data", () => {
     const member: Member = { firstName: "Abadi", lastName: "Kurniawan" };
@@ -59,8 +59,7 @@ describe("SearchResultComponent", () => {
       searchResult: loading(success([member]))
     });
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.textContent).toContain("Loading...");
+    expect(compiled.querySelector("app-loading-indicator")).not.toBeNull();
     expect(compiled.textContent).toContain(member.firstName);
     expect(compiled.textContent).toContain(member.lastName);
   });
@@ -71,7 +70,6 @@ describe("SearchResultComponent", () => {
       searchResult: success([member])
     });
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
     expect(compiled.textContent).toContain(member.firstName);
     expect(compiled.textContent).toContain(member.lastName);
   });
@@ -82,7 +80,6 @@ describe("SearchResultComponent", () => {
       searchResult: error(errorMessage)
     });
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
     expect(compiled.textContent).toContain(errorMessage);
   });
   it("should show error message and data", () => {
@@ -93,7 +90,6 @@ describe("SearchResultComponent", () => {
       searchResult: error(errorMessage, loading(success([member])))
     });
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
     expect(compiled.textContent).toContain(errorMessage);
     expect(compiled.textContent).toContain(member.firstName);
     expect(compiled.textContent).toContain(member.lastName);
