@@ -58,8 +58,12 @@ export function loading<data, e>(
 
 class Success<data> {
   readonly kind = RemoteDataKind.Success;
-  isLoading = () => false;
-  hasData = () => true;
+  isLoading() {
+    return false;
+  }
+  hasData() {
+    true;
+  }
   constructor(public value: data) {}
 }
 export function success<data>(value: data): Success<data> {
