@@ -12,6 +12,8 @@ const initialState: State = {
 };
 
 export function reducer(state = initialState, action: AppActionsUnion): State {
+  console.log("Hit here in the reducer");
+  console.log(action);
   switch (action.type) {
     case AppActionType.Search: {
       return { ...state, searchResult: loading(state.searchResult) };

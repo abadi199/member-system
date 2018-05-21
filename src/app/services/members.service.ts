@@ -23,7 +23,7 @@ export class MemberService {
       delay(3000),
       catchError(err => {
         console.error("Encountered an error", err);
-        return of([]);
+        return [];
       })
     );
   }
