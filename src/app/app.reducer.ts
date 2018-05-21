@@ -7,7 +7,7 @@ export interface State {
   searchResult: RemoteData<Member[], string>;
 }
 
-const initialState: State = {
+export const initialState: State = {
   searchResult: notAsked()
 };
 

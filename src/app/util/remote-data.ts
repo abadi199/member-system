@@ -38,21 +38,24 @@ class Reloading<data> {
   constructor(public value: data) {}
 }
 export function loading<data, e>(
-  remoteData: RemoteData<data, e>
+  previous: RemoteData<data, e> | null = null
 ): Loading | Reloading<data> {
-  switch (remoteData.kind) {
+  if (previous === null) {
+    return loadingConst;
+  }
+  switch (previous.kind) {
     case RemoteDataKind.Error:
       return loadingConst;
     case RemoteDataKind.ErrorWithData:
-      return new Reloading(remoteData.value);
+      return new Reloading(previous.value);
     case RemoteDataKind.Loading:
-      return remoteData;
+      return previous;
     case RemoteDataKind.NotAsked:
       return loadingConst;
     case RemoteDataKind.Reloading:
-      return remoteData;
+      return previous;
     case RemoteDataKind.Success:
-      return new Reloading(remoteData.value);
+      return new Reloading(previous.value);
   }
 }
 
@@ -86,23 +89,26 @@ class ErrorWithData<e, data> {
   constructor(public error: e, public value: data) {}
 }
 export function error<e, data>(
-  remoteData: RemoteData<data, e>,
   // tslint:disable-next-line:no-shadowed-variable
-  error: e
+  error: e,
+  previous: RemoteData<data, e> | null = null
 ): Error<e> | ErrorWithData<e, data> {
-  switch (remoteData.kind) {
+  if (previous === null) {
+    return new Error(error);
+  }
+  switch (previous.kind) {
     case RemoteDataKind.Error:
       return new Error(error);
     case RemoteDataKind.ErrorWithData:
-      return new ErrorWithData(error, remoteData.value);
+      return new ErrorWithData(error, previous.value);
     case RemoteDataKind.Loading:
       return new Error(error);
     case RemoteDataKind.NotAsked:
       return new Error(error);
     case RemoteDataKind.Reloading:
-      return new ErrorWithData(error, remoteData.value);
+      return new ErrorWithData(error, previous.value);
     case RemoteDataKind.Success:
-      return new ErrorWithData(error, remoteData.value);
+      return new ErrorWithData(error, previous.value);
   }
 }
 
