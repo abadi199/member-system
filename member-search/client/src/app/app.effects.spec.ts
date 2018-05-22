@@ -34,7 +34,6 @@ describe("AppEffects", () => {
     TestBed.configureTestingModule({
       providers: [
         provideMockActions(() => {
-          actions.subscribe(console.log);
           return actions;
         }),
         { provide: MemberService, useFactory: getMemberService },
