@@ -25,7 +25,7 @@ function getMemberService() {
   return new TestMemberService();
 }
 
-fdescribe("AppEffects", () => {
+describe("AppEffects", () => {
   let effects: AppEffects;
   let memberService: TestMemberService;
   let actions: Observable<any>;
