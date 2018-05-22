@@ -42,7 +42,6 @@ export class SearchResultComponent implements OnInit {
 
   constructor(private store: Store<State>) {
     store.pipe(select("appStore")).subscribe(state => {
-      console.log(state);
       this.members = state.searchResult;
     });
   }
