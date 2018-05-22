@@ -14,8 +14,12 @@ interface IRemoteData {
 }
 class NotAsked implements IRemoteData {
   readonly kind = RemoteDataKind.NotAsked;
-  isLoading = () => false;
-  hasData = () => false;
+  isLoading() {
+    return false;
+  }
+  hasData() {
+    return false;
+  }
 }
 
 const notAskedConst = new NotAsked();
@@ -26,15 +30,23 @@ export function notAsked(): NotAsked {
 
 class Loading {
   readonly kind = RemoteDataKind.Loading;
-  isLoading = () => true;
-  hasData = () => false;
+  isLoading() {
+    return true;
+  }
+  hasData() {
+    return false;
+  }
 }
 const loadingConst = new Loading();
 
 class Reloading<data> {
   readonly kind = RemoteDataKind.Reloading;
-  isLoading = () => true;
-  hasData = () => true;
+  isLoading() {
+    return true;
+  }
+  hasData() {
+    return false;
+  }
   constructor(public value: data) {}
 }
 export function loading<data, e>(
@@ -65,7 +77,7 @@ class Success<data> {
     return false;
   }
   hasData() {
-    true;
+    return true;
   }
   constructor(public value: data) {}
 }
@@ -75,16 +87,24 @@ export function success<data>(value: data): Success<data> {
 
 class Error<e> {
   readonly kind = RemoteDataKind.Error;
-  isLoading = () => false;
-  hasData = () => false;
+  isLoading() {
+    return false;
+  }
+  hasData() {
+    return false;
+  }
   // tslint:disable-next-line:no-shadowed-variable
   constructor(public error: e) {}
 }
 
 class ErrorWithData<e, data> {
   readonly kind = RemoteDataKind.ErrorWithData;
-  isLoading = () => false;
-  hasData = () => true;
+  isLoading() {
+    return false;
+  }
+  hasData() {
+    return true;
+  }
   // tslint:disable-next-line:no-shadowed-variable
   constructor(public error: e, public value: data) {}
 }
