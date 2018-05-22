@@ -5,6 +5,8 @@ import { SearchResultComponent } from "./search-result/search-result.component";
 import { StoreModule } from "@ngrx/store";
 import { reducer } from "./app.reducer";
 import { MemberTableComponent } from "./member-table/member-table.component";
+import { LoadingIndicatorComponent } from "./loading-indicator/loading-indicator.component";
+
 describe("AppComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -12,7 +14,8 @@ describe("AppComponent", () => {
         AppComponent,
         SearchFormComponent,
         SearchResultComponent,
-        MemberTableComponent
+        MemberTableComponent,
+        LoadingIndicatorComponent
       ],
       imports: [StoreModule.forRoot({ appStore: reducer })]
     }).compileComponents();
@@ -22,7 +25,7 @@ describe("AppComponent", () => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
-  it(`should have as title 'app'`, async(() => {
+  it(`should have as title 'Member Search'`, async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual("Member Search");
