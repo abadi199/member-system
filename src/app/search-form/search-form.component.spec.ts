@@ -32,8 +32,8 @@ describe("SearchFormComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  describe("'_search()' should dispatch the search action", () => {
-    it("Valid input should dispatch", () => {
+  describe("_search()", () => {
+    it("Should dispatch the search action with valid input", () => {
       const firstName: string = "Aba";
 
       const action = new Search(firstName);
@@ -43,7 +43,7 @@ describe("SearchFormComponent", () => {
       expect(store.dispatch).toHaveBeenCalledWith(action);
     });
 
-    it("Invalid input should not dispatch", () => {
+    it("Should not dispatch search action with invalid input", () => {
       const shortFirstName: string = "A";
 
       const action = new Search(shortFirstName);
@@ -54,7 +54,7 @@ describe("SearchFormComponent", () => {
     });
   });
 
-  it("Should call the search method when input is submitted with enter", async () => {
+  it("Should submit search on input keypress enter", async () => {
     const keyName: string = "Enter";
     const eventName: string = "keyup";
     const firstName: string = "Aba";
