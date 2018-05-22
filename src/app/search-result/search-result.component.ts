@@ -14,6 +14,9 @@ const memberTemplate = `
   selector: "app-search-result",
   template: `
   <div [ngSwitch]="members.kind">
+    <div *ngSwitchCase="${RemoteDataKind.NotAsked}">
+      <p>Not Asked</p>
+    </div>
     <div *ngSwitchCase="${RemoteDataKind.Loading}">
       <app-loading-indicator></app-loading-indicator></div>
     <div *ngSwitchCase="${RemoteDataKind.Reloading}">
@@ -35,12 +38,10 @@ const memberTemplate = `
   styles: []
 })
 export class SearchResultComponent implements OnInit {
-  private observableState: Observable<State>;
   private members: RemoteData<Member[], string> = notAsked();
 
   constructor(private store: Store<State>) {
-    this.observableState = store.pipe(select("appStore"));
-    this.observableState.subscribe(state => {
+    store.pipe(select("appStore")).subscribe(state => {
       this.members = state.searchResult;
     });
   }
