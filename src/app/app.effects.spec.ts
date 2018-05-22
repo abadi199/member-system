@@ -45,8 +45,8 @@ fdescribe("AppEffects", () => {
     memberService = TestBed.get(MemberService);
   });
 
-  describe("search$", () => {
-    it("should return an observable SearchCompleted, containing an array of members", () => {
+  describe("search$ should dispatch the search completed action", () => {
+    it("Should include list of members when successful", () => {
       spyOn(memberService, "searchMembers").and.callThrough();
 
       const action = new Search("Aba");
@@ -57,7 +57,7 @@ fdescribe("AppEffects", () => {
       expect(effects.search$).toBeObservable(expected);
     });
 
-    it("Returns an observable SearchCompleted, containing the error when an error is thrown", () => {
+    it("Should include an error message when failing", () => {
       spyOn(memberService, "searchMembers").and.returnValue(throwError);
 
       const action = new Search("Aba");
