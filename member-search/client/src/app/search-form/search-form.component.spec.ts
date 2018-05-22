@@ -54,20 +54,22 @@ describe("SearchFormComponent", () => {
     });
   });
 
-  it("Should submit search on input keypress enter", async () => {
-    const keyName: string = "Enter";
-    const eventName: string = "keyup";
-    const firstName: string = "Aba";
+  describe("search", () => {
+    it("Should submit search on input keypress enter", async () => {
+      const keyName: string = "Enter";
+      const eventName: string = "keyup";
+      const firstName: string = "Aba";
 
-    spyOn(component, "search");
+      spyOn(component, "search").and.callThrough();
 
-    var input = fixture.debugElement.nativeElement.querySelector("input");
-    input.value = firstName;
+      var input = fixture.debugElement.nativeElement.querySelector("input");
+      input.value = firstName;
 
-    input.dispatchEvent(new KeyboardEvent(eventName, { key: keyName }));
+      input.dispatchEvent(new KeyboardEvent(eventName, { key: keyName }));
 
-    fixture.whenStable().then(() => {
-      expect(component.search).toHaveBeenCalled();
+      fixture.whenStable().then(() => {
+        expect(component.search).toHaveBeenCalled();
+      });
     });
   });
 });
