@@ -25,7 +25,7 @@ function getMemberService() {
   return new TestMemberService();
 }
 
-fdescribe("AppEffects", () => {
+describe("AppEffects", () => {
   let effects: AppEffects;
   let memberService: TestMemberService;
   let actions: Observable<any>;
@@ -58,15 +58,17 @@ fdescribe("AppEffects", () => {
     });
 
     it("Should include an error message when failing", () => {
-      spyOn(memberService, "searchMembers").and.returnValue(throwError);
-
+      spyOn(memberService, "searchMembers").and.returnValue(
+        throwError("API Error")
+      );
       const action = new Search("Aba");
       const completion = new SearchCompleted(
         error("An error occurred fetching results from the member service")
       );
 
-      actions = hot("--a", { a: action });
-      const expected = cold("--b", { b: completion });
+      actions = hot("a", { a: action });
+      const expected = cold("b", { a: action, b: completion });
+
       expect(effects.search$).toBeObservable(expected);
     });
   });
