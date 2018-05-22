@@ -1,12 +1,12 @@
 import { TestBed } from "@angular/core/testing";
 import { Actions } from "@ngrx/effects";
-import { empty, Observable, of, ReplaySubject } from "rxjs";
+import { empty, Observable, of, ReplaySubject, throwError } from "rxjs";
 import { AppActionType, Search, SearchCompleted } from "./app.actions";
 import { MemberService } from "./services/members.service";
 import { AppEffects } from "./app.effects";
 import { Member } from "./models/member";
 import { cold, hot } from "jasmine-marbles";
-import { success } from "./util/remote-data";
+import { success, error } from "./util/remote-data";
 import { provideMockActions } from "@ngrx/effects/testing";
 import { delay } from "rxjs/operators";
 
@@ -34,8 +34,6 @@ fdescribe("AppEffects", () => {
     TestBed.configureTestingModule({
       providers: [
         provideMockActions(() => {
-          console.log("Called here.");
-          console.log(actions);
           return actions;
         }),
         { provide: MemberService, useFactory: getMemberService },
@@ -48,7 +46,7 @@ fdescribe("AppEffects", () => {
   });
 
   describe("search$", () => {
-    it("return a new SearchCompleted, with the members, on success", () => {
+    it("should return an observable SearchCompleted, containing an array of members", () => {
       spyOn(memberService, "searchMembers").and.callThrough();
 
       const action = new Search("Aba");
@@ -56,6 +54,19 @@ fdescribe("AppEffects", () => {
 
       actions = hot("a", { a: action });
       const expected = cold("b", { b: completion });
+      expect(effects.search$).toBeObservable(expected);
+    });
+
+    it("Returns an observable SearchCompleted, containing the error when an error is thrown", () => {
+      spyOn(memberService, "searchMembers").and.returnValue(throwError);
+
+      const action = new Search("Aba");
+      const completion = new SearchCompleted(
+        error("An error occurred fetching results from the member service")
+      );
+
+      actions = hot("--a", { a: action });
+      const expected = cold("--b", { b: completion });
       expect(effects.search$).toBeObservable(expected);
     });
   });
