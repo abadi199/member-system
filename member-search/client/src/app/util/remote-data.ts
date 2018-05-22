@@ -45,7 +45,7 @@ class Reloading<data> {
     return true;
   }
   hasData() {
-    return false;
+    return true;
   }
   constructor(public value: data) {}
 }
