@@ -1,0 +1,6 @@
+FROM member_search_env
+COPY . /build/
+WORKDIR /build
+RUN npm install
+EXPOSE 4200
+CMD ["npm", "start"]
