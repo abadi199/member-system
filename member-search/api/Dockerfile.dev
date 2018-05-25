@@ -1,0 +1,17 @@
+FROM golang as buildenv
+RUN mkdir -p /build
+COPY . /build/
+WORKDIR /build/cmd/populate_db
+RUN go get -d
+RUN go build
+WORKDIR /build/cmd/member_search_api
+RUN go get -d
+RUN go build
+
+FROM mongo as mgosrv
+RUN mkdir -p /root/bin
+COPY --from=buildenv /build/cmd/populate_db/populate_db /root/bin
+COPY --from=buildenv /build/cmd/member_search_api/member_search_api /root/bin
+CMD ["/root/bin/populate_db"]
+CMD ["/root/bin/member_search_api"]
+
