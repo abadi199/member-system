@@ -3,7 +3,10 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.1.
 
 ## Running in Docker
-Generate the image describing the build environment. `docker build --file=Dockerfile.env -t member_search_env .`
+Three images are available to the member-search client. The purpose of each follows.
+
+### Build Environment Image
+First, generate the image describing the build environment. `docker build --file=Dockerfile.env -t member_search_env .` This image is required to build either the development or production image. Its purpose is to seperate out the npm install step to speed up regeneration of downstream containers.
 
 ### Development Image
 Rebuild your dev image: `docker build --file=Dockerfile.dev -t member_search_dev .`
@@ -11,7 +14,7 @@ Run your dev image, access on port 80: `docker run -p 80:4200 member_search_dev`
 
 ### Production Image
 Rebuild your prod image: `docker build --file=Dockerfile.prod -t member_search_prod .`
-Run the prod image: `docker run -p 80:80 member_search_prod`
+Run the prod image: `docker run -p 80:80 member_search_prod` Note: this image will build the angular app with strict type checking, exposing errors that may not be caught in a development build. 
 
 ## Development server
 
