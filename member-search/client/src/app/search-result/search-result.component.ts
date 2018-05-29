@@ -13,7 +13,7 @@ const memberTemplate = `
 @Component({
   selector: "app-search-result",
   template: `
-  <div [ngSwitch]="members.kind">
+  <div [ngSwitch]="members.kindd">
     <div *ngSwitchCase="${RemoteDataKind.NotAsked}">
       <p>Not Asked</p>
     </div>
@@ -38,7 +38,7 @@ const memberTemplate = `
   styles: []
 })
 export class SearchResultComponent implements OnInit {
-  private members: RemoteData<Member[], string> = notAsked();
+  members: RemoteData<Member[], string> = notAsked();
 
   constructor(private store: Store<State>) {
     store.pipe(select("appStore")).subscribe(state => {
