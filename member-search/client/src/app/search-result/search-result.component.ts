@@ -22,11 +22,7 @@ import { ErrorComponent } from "../error/error.component";
 })
 export class SearchResultComponent implements OnInit {
   members: RemoteData<Member[], string> = notAsked();
-  config: RemoteDataComponent.Config<Member[], string> = {
-    loadingComponent: LoadingIndicatorComponent,
-    successComponent: MemberTableComponent,
-    errorComponent: ErrorComponent
-  };
+  config = RemoteDataComponent.config(MemberTableComponent);
 
   constructor(private store: Store<State>) {
     store.pipe(select("appStore")).subscribe(state => {

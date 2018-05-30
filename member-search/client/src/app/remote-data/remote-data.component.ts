@@ -9,6 +9,8 @@ import {
 } from "@angular/core";
 import { RemoteData, notAsked, RemoteDataKind } from "./remote-data";
 import { RemoteDataDirective } from "./remote-data.directive";
+import { LoadingIndicatorComponent } from "../loading-indicator/loading-indicator.component";
+import { ErrorComponent } from "../error/error.component";
 
 @Component({
   selector: "app-remote-data",
@@ -34,9 +36,7 @@ export class RemoteDataComponent<T, Error> implements OnInit {
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
-  ngOnInit() {
-    this.render();
-  }
+  ngOnInit() {}
   render() {
     if (this.config === undefined) {
       return;
@@ -142,4 +142,14 @@ export interface ISuccessComponent<T> {
 
 export interface IErrorComponent<Error> {
   error: Error;
+}
+
+export function config<T>(
+  successComponent: Type<ISuccessComponent<T>>
+): Config<T, string> {
+  return {
+    loadingComponent: LoadingIndicatorComponent,
+    errorComponent: ErrorComponent,
+    successComponent
+  };
 }
