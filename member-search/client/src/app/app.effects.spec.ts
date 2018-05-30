@@ -6,7 +6,7 @@ import { MemberService } from "./services/members.service";
 import { AppEffects } from "./app.effects";
 import { Member } from "./models/member";
 import { cold, hot } from "jasmine-marbles";
-import { success, error } from "./util/remote-data";
+import { success, error } from "./remote-data/remote-data";
 import { provideMockActions } from "@ngrx/effects/testing";
 import { delay } from "rxjs/operators";
 

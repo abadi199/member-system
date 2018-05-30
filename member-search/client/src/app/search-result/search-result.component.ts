@@ -4,41 +4,29 @@ import { MemberTableComponent } from "../member-table/member-table.component";
 import { State } from "../app.reducer";
 import { Store, select } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { RemoteData, notAsked, RemoteDataKind } from "../util/remote-data";
+import {
+  RemoteData,
+  notAsked,
+  RemoteDataKind
+} from "../remote-data/remote-data";
+import * as RemoteDataComponent from "../remote-data/remote-data.component";
+import { LoadingIndicatorComponent } from "../loading-indicator/loading-indicator.component";
+import { ErrorComponent } from "../error/error.component";
 
-const memberTemplate = `
-      <div *ngIf="!members.value.length">No members found</div>
-      <app-member-table *ngIf="members.value.length" [members]="members.value"></app-member-table>
-`;
 @Component({
   selector: "app-search-result",
   template: `
-  <div [ngSwitch]="members.kind">
-    <div *ngSwitchCase="${RemoteDataKind.NotAsked}">
-      <p>Not Asked</p>
-    </div>
-    <div *ngSwitchCase="${RemoteDataKind.Loading}">
-      <app-loading-indicator></app-loading-indicator></div>
-    <div *ngSwitchCase="${RemoteDataKind.Reloading}">
-      <app-loading-indicator></app-loading-indicator>
-      ${memberTemplate}
-    </div>
-    <div *ngSwitchCase="${RemoteDataKind.Success}">
-      ${memberTemplate}
-    </div>
-    <div *ngSwitchCase="${RemoteDataKind.ErrorWithData}">
-      ${memberTemplate}
-      <div class="error">{{members.error}}</div>
-    </div>
-    <div *ngSwitchCase="${RemoteDataKind.Error}">
-      <div class="error">{{members.error}}</div>
-    </div>
-  </div>
-  `,
+  <app-remote-data [remoteData]="members" [config]="config"></app-remote-data>
+ `,
   styles: []
 })
 export class SearchResultComponent implements OnInit {
-  private members: RemoteData<Member[], string> = notAsked();
+  members: RemoteData<Member[], string> = notAsked();
+  config: RemoteDataComponent.Config<Member[], string> = {
+    loadingComponent: LoadingIndicatorComponent,
+    successComponent: MemberTableComponent,
+    errorComponent: ErrorComponent
+  };
 
   constructor(private store: Store<State>) {
     store.pipe(select("appStore")).subscribe(state => {
