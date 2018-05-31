@@ -5,7 +5,7 @@ import { ISuccessComponent } from "../remote-data/remote-data.component";
 @Component({
   selector: "app-member-table",
   template: `
-  <div *ngIf="!data.length">No members found</div>
+  <div *ngIf="!data?.length">No members found</div>
   <div *ngIf="data.length">
     <h2>Members</h2>
     <table>
@@ -25,7 +25,7 @@ import { ISuccessComponent } from "../remote-data/remote-data.component";
 })
 export class MemberTableComponent
   implements OnInit, ISuccessComponent<Member[]> {
-  @Input() data: Member[];
+  @Input() data: Member[] = [];
 
   constructor() {}
 

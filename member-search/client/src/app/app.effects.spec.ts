@@ -1,7 +1,12 @@
 import { TestBed } from "@angular/core/testing";
 import { Actions } from "@ngrx/effects";
 import { empty, Observable, of, ReplaySubject, throwError } from "rxjs";
-import { AppActionType, Search, SearchCompleted } from "./app.actions";
+import {
+  AppActionType,
+  Search,
+  SearchCompleted,
+  SearchFailed
+} from "./app.actions";
 import { MemberService } from "./services/members.service";
 import { AppEffects } from "./app.effects";
 import { Member } from "./models/member";
@@ -16,7 +21,6 @@ class TestMemberService {
   constructor() {}
 
   searchMembers(firstName: string): Observable<Member[]> {
-    console.log("Called search members", firstName);
     return of([member]);
   }
 }
@@ -59,12 +63,10 @@ describe("AppEffects", () => {
 
     it("Should include an error message when failing", () => {
       spyOn(memberService, "searchMembers").and.returnValue(
-        throwError("API Error")
+        throwError(new Error("API Error"))
       );
       const action = new Search("Aba");
-      const completion = new SearchCompleted(
-        error("An error occurred fetching results from the member service")
-      );
+      const completion = new SearchFailed(new Error("API Error"));
 
       actions = hot("a", { a: action });
       const expected = cold("b", { a: action, b: completion });

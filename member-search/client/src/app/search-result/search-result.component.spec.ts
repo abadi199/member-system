@@ -6,9 +6,13 @@ import { LoadingIndicatorComponent } from "../loading-indicator/loading-indicato
 import { StoreModule, Store, select } from "@ngrx/store";
 import { reducer, State, initialState } from "../app.reducer";
 import { Observable, of, BehaviorSubject } from "rxjs";
-import { loading, notAsked, success, error } from "../util/remote-data";
+import { loading, notAsked, success, error } from "../remote-data/remote-data";
 import { map } from "rxjs/operators";
 import { Member } from "../models/member";
+import { RemoteDataComponent } from "../remote-data/remote-data.component";
+import { ErrorComponent } from "../error/error.component";
+import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
+import { RemoteDataDirective } from "../remote-data/remote-data.directive";
 
 describe("SearchResultComponent", () => {
   let component: SearchResultComponent;
@@ -19,14 +23,26 @@ describe("SearchResultComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      // providers: [{ provide: Store, useClass: MockStore }],
       declarations: [
         SearchResultComponent,
         MemberTableComponent,
-        LoadingIndicatorComponent
+        LoadingIndicatorComponent,
+        RemoteDataComponent,
+        ErrorComponent,
+        RemoteDataDirective
       ],
       imports: [StoreModule.forRoot({ appStore: reducer })]
-    }).compileComponents();
+    })
+      .overrideModule(BrowserDynamicTestingModule, {
+        set: {
+          entryComponents: [
+            LoadingIndicatorComponent,
+            MemberTableComponent,
+            ErrorComponent
+          ]
+        }
+      })
+      .compileComponents();
 
     store = TestBed.get(Store);
     spyOn(store, "pipe").and.returnValue(state$);
