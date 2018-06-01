@@ -6,5 +6,13 @@ export const mockMembers = [
   {
     firstName: "Abadi",
     lastName: "Kurniawan"
+  }, 
+  {
+    firstName: "Gus",
+    lastName: "Steurer"
+  }, 
+  {
+    firstName: "Dylan",
+    lastName: "Hasinger"
   }
 ];
