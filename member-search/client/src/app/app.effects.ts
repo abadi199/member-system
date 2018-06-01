@@ -6,11 +6,12 @@ import {
   AppActionType,
   AppActionsUnion,
   Search,
-  SearchCompleted
+  SearchCompleted,
+  SearchFailed
 } from "./app.actions";
 import { MemberService } from "./services/members.service";
 import { map, mergeMap, catchError } from "rxjs/operators";
-import { success, error } from "./util/remote-data";
+import { success, error } from "./remote-data/remote-data";
 
 const searchErrorMessage =
   "An error occurred fetching results from the member service";
@@ -23,13 +24,13 @@ export class AppEffects {
     mergeMap(action => {
       return this.memberService.searchMembers(action.payload).pipe(
         map(result => new SearchCompleted(success(result))),
-        catchError(err => {
-          return of(new SearchCompleted(error(searchErrorMessage)));
+        catchError((err: Error) => {
+          return of(new SearchFailed(err));
         })
       );
     }),
-    catchError(err => {
-      return of(new SearchCompleted(error(searchErrorMessage)));
+    catchError((err: Error) => {
+      return of(new SearchFailed(err));
     })
   );
 

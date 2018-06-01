@@ -1,10 +1,11 @@
 import { Action } from "@ngrx/store";
 import { Member } from "./models/member";
-import { RemoteData } from "./util/remote-data";
+import { RemoteData } from "./remote-data/remote-data";
 
 export enum AppActionType {
   Search = "[App] Search",
-  SearchCompleted = "[App] Search Completed"
+  SearchCompleted = "[App] Search Completed",
+  SearchFailed = "[App] Search Failed"
 }
 
 export class Search implements Action {
@@ -19,4 +20,10 @@ export class SearchCompleted implements Action {
   constructor(public payload: RemoteData<Member[], string>) {}
 }
 
-export type AppActionsUnion = Search | SearchCompleted;
+export class SearchFailed implements Action {
+  readonly type = AppActionType.SearchFailed;
+
+  constructor(public payload: Error) {}
+}
+
+export type AppActionsUnion = Search | SearchCompleted | SearchFailed;
