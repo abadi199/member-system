@@ -2,12 +2,12 @@ import { TestBed, async } from "@angular/core/testing";
 import { AppComponent } from "./app.component";
 import { SearchFormComponent } from "./search-form/search-form.component";
 import { SearchResultComponent } from "./search-result/search-result.component";
-import { StoreModule } from "@ngrx/store";
-import { reducer } from "./app.reducer";
 import { MemberTableComponent } from "./member-table/member-table.component";
 import { LoadingIndicatorComponent } from "./loading-indicator/loading-indicator.component";
 import { ErrorComponent } from "./error/error.component";
 import { RemoteDataComponent } from "./remote-data/remote-data.component";
+import { NgxsModule } from "@ngxs/store";
+import { AppState } from "./app.state";
 
 describe("AppComponent", () => {
   beforeEach(async(() => {
@@ -21,7 +21,7 @@ describe("AppComponent", () => {
         ErrorComponent,
         RemoteDataComponent
       ],
-      imports: [StoreModule.forRoot({ appStore: reducer })]
+      imports: [NgxsModule.forRoot([AppState])]
     }).compileComponents();
   }));
   it("should create the app", async(() => {

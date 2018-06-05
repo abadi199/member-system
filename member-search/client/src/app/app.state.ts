@@ -13,7 +13,7 @@ import { catchError, tap } from "rxjs/operators";
 import { empty } from "rxjs";
 
 // State Model
-export const initialState = {
+export const initialState: AppStateModel = {
   searchResult: notAsked()
 };
 
@@ -64,11 +64,14 @@ export class AppState {
 
   @Action(Search)
   search({ dispatch }: StateContext<AppStateModel>, action: Search) {
+    console.log("search");
     return this.memberService.searchMembers(action.payload).pipe(
       tap(result => {
+        console.log("search completed");
         dispatch(new SearchCompleted(result));
       }),
       catchError((err: Error) => {
+        console.log("search failed");
         dispatch(new SearchFailed(err));
         return empty();
       })

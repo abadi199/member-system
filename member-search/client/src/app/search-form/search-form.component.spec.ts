@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { SearchFormComponent } from "./search-form.component";
-import { StoreModule, Store } from "@ngrx/store";
-import { reducer, State } from "../app.reducer";
 import { AppActionsUnion, Search } from "../app.actions";
 import { Component } from "@angular/core";
+import { Store, NgxsModule } from "@ngxs/store";
+import { AppState } from "../app.state";
 
 describe("SearchFormComponent", () => {
   let component: SearchFormComponent;
   let fixture: ComponentFixture<SearchFormComponent>;
-  let store: Store<State>;
+  let store: Store;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SearchFormComponent],
-      imports: [StoreModule.forRoot({ appStore: reducer })]
+      imports: [NgxsModule.forRoot([AppState])]
     }).compileComponents();
   }));
 
@@ -34,7 +34,7 @@ describe("SearchFormComponent", () => {
 
   describe("_search()", () => {
     it("Should dispatch the search action with valid input", () => {
-      const firstName: string = "Aba";
+      const firstName = "Aba";
 
       const action = new Search(firstName);
 
@@ -44,7 +44,7 @@ describe("SearchFormComponent", () => {
     });
 
     it("Should not dispatch search action with invalid input", () => {
-      const shortFirstName: string = "A";
+      const shortFirstName = "A";
 
       const action = new Search(shortFirstName);
 
@@ -56,13 +56,13 @@ describe("SearchFormComponent", () => {
 
   describe("search", () => {
     it("Should submit search on input keypress enter", async () => {
-      const keyName: string = "Enter";
-      const eventName: string = "keyup";
-      const firstName: string = "Aba";
+      const keyName = "Enter";
+      const eventName = "keyup";
+      const firstName = "Aba";
 
       spyOn(component, "search").and.callThrough();
 
-      var input = fixture.debugElement.nativeElement.querySelector("input");
+      const input = fixture.debugElement.nativeElement.querySelector("input");
       input.value = firstName;
 
       input.dispatchEvent(new KeyboardEvent(eventName, { key: keyName }));
