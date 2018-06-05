@@ -1,8 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Member } from "../models/member";
 import { MemberTableComponent } from "../member-table/member-table.component";
-import { State } from "../app.reducer";
-import { Store, select } from "@ngrx/store";
 import { Observable } from "rxjs";
 import {
   RemoteData,
@@ -12,23 +10,23 @@ import {
 import * as RemoteDataComponent from "../remote-data/remote-data.component";
 import { LoadingIndicatorComponent } from "../loading-indicator/loading-indicator.component";
 import { ErrorComponent } from "../error/error.component";
+import { Store, Select } from "@ngxs/store";
+import { AppState } from "../app.state";
 
 @Component({
   selector: "app-search-result",
   template: `
-  <app-remote-data [remoteData]="members" [config]="config"></app-remote-data>
+  <app-remote-data [remoteData]="members$ | async" [config]="config"></app-remote-data>
  `,
   styles: []
 })
 export class SearchResultComponent implements OnInit {
-  members: RemoteData<Member[], string> = notAsked();
+  @Select(AppState.searchResult)
+  members$: Observable<RemoteData<Member[], string>>;
+
   config = RemoteDataComponent.config(MemberTableComponent);
 
-  constructor(private store: Store<State>) {
-    store.pipe(select("appStore")).subscribe(state => {
-      this.members = state.searchResult;
-    });
-  }
+  constructor(private store: Store) {}
 
   ngOnInit() {}
 }

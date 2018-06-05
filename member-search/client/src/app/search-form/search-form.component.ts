@@ -1,10 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { Store, select } from "@ngrx/store";
-import { State } from "../app.reducer";
 import { Observable } from "rxjs";
 import { Search } from "../app.actions";
 import { MemberService } from "../services/members.service";
 import { success } from "../remote-data/remote-data";
+import { Store } from "@ngxs/store";
 
 @Component({
   selector: "app-search-form",
@@ -16,15 +15,12 @@ import { success } from "../remote-data/remote-data";
   styles: []
 })
 export class SearchFormComponent implements OnInit {
-  constructor(
-    private store: Store<State>,
-    private memberService: MemberService
-  ) {}
+  constructor(private store: Store, private memberService: MemberService) {}
 
   ngOnInit() {}
 
   search($event) {
-    var firstName: string = $event.target.value;
+    const firstName: string = $event.target.value;
 
     this._search(firstName);
   }
