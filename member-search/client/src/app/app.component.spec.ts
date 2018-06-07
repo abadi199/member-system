@@ -6,6 +6,8 @@ import { StoreModule } from "@ngrx/store";
 import { reducer } from "./app.reducer";
 import { MemberTableComponent } from "./member-table/member-table.component";
 import { LoadingIndicatorComponent } from "./loading-indicator/loading-indicator.component";
+import { ErrorComponent } from "./error/error.component";
+import { RemoteDataComponent } from "./remote-data/remote-data.component";
 
 describe("AppComponent", () => {
   beforeEach(async(() => {
@@ -15,7 +17,9 @@ describe("AppComponent", () => {
         SearchFormComponent,
         SearchResultComponent,
         MemberTableComponent,
-        LoadingIndicatorComponent
+        LoadingIndicatorComponent,
+        ErrorComponent,
+        RemoteDataComponent
       ],
       imports: [StoreModule.forRoot({ appStore: reducer })]
     }).compileComponents();

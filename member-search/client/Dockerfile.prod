@@ -1,0 +1,9 @@
+FROM member_search_env as build
+COPY . /build/
+WORKDIR /build
+RUN npm install
+RUN ng build --prod
+
+FROM nginx
+COPY --from=build /build/dist/* /usr/share/nginx/html
+EXPOSE 80

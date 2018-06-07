@@ -4,7 +4,8 @@ import { State } from "../app.reducer";
 import { Observable } from "rxjs";
 import { Search } from "../app.actions";
 import { MemberService } from "../services/members.service";
-import { success } from "../util/remote-data";
+import { success } from "@abadi199/remotedata";
+
 @Component({
   selector: "app-search-form",
   template: `
