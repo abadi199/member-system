@@ -6,7 +6,7 @@ import {
   notAsked,
   error,
   loading
-} from "./remote-data/remote-data";
+} from "@abadi199/remotedata";
 
 export interface State {
   searchResult: RemoteData<Member[], string>;

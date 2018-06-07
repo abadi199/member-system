@@ -1,6 +1,6 @@
 import { Action } from "@ngrx/store";
 import { Member } from "./models/member";
-import { RemoteData } from "./remote-data/remote-data";
+import { RemoteData } from "@abadi199/remotedata";
 
 export enum AppActionType {
   Search = "[App] Search",
