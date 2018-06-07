@@ -11,7 +11,7 @@ import {
 } from "./app.actions";
 import { MemberService } from "./services/members.service";
 import { map, mergeMap, catchError } from "rxjs/operators";
-import { success, error } from "./remote-data/remote-data";
+import { success, error } from "@abadi199/remotedata";
 
 const searchErrorMessage =
   "An error occurred fetching results from the member service";

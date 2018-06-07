@@ -8,7 +8,7 @@ import {
   RemoteData,
   notAsked,
   RemoteDataKind
-} from "../remote-data/remote-data";
+} from "@abadi199/remotedata";
 import * as RemoteDataComponent from "../remote-data/remote-data.component";
 import { LoadingIndicatorComponent } from "../loading-indicator/loading-indicator.component";
 import { ErrorComponent } from "../error/error.component";
