@@ -7,7 +7,7 @@ import {
   ViewChild,
   ViewContainerRef
 } from "@angular/core";
-import { RemoteData, notAsked, RemoteDataKind } from "@abadi199/remotedata";
+import { Error, RemoteData, notAsked, RemoteDataKind } from "@abadi199/remotedata";
 import { RemoteDataDirective } from "./remote-data.directive";
 import { LoadingIndicatorComponent } from "../loading-indicator/loading-indicator.component";
 import { ErrorComponent } from "../error/error.component";
@@ -47,7 +47,7 @@ export class RemoteDataComponent<T, Error> implements OnInit {
         this.renderLoading();
         break;
       case RemoteDataKind.Error:
-        this.renderError((<Error<Member[], string>>this.remoteData).error);
+        this.renderError((this.remoteData).error);
         break;
       case RemoteDataKind.ErrorWithData:
         this.renderErrorWithData(this.remoteData.value, this.remoteData.error);
