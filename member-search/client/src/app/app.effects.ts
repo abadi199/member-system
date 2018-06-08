@@ -6,8 +6,7 @@ import {
   AppActionType,
   AppActionsUnion,
   Search,
-  SearchCompleted,
-  SearchFailed
+  SearchCompleted
 } from "./app.actions";
 import { MemberService } from "./services/members.service";
 import { map, mergeMap, catchError } from "rxjs/operators";
@@ -25,12 +24,12 @@ export class AppEffects {
       return this.memberService.searchMembers(action.payload).pipe(
         map(result => new SearchCompleted(success(result))),
         catchError((err: Error) => {
-          return of(new SearchFailed(err));
+          return of(new SearchCompleted(error(err.message)));
         })
       );
     }),
     catchError((err: Error) => {
-      return of(new SearchFailed(err));
+      return of(new SearchCompleted(error(err.message)));
     })
   );
 

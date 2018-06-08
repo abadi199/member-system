@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@abadi199/remotedata": "0.0.3",
+    "@abadi199/remotedata": "^1.1.0",
     "@angular/animations": "^6.0.0",
     "@angular/common": "^6.0.0",
     "@angular/compiler": "^6.0.0",
