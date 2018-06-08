@@ -48,9 +48,9 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(["dist"]),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "common-dependencies"
-    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    // name: "common-dependencies"
+    // }),
     new ContextReplacementPlugin(
       /(.+)?angular(\\|\/)core(.+)?/,
       path.resolve(__dirname, "../src")
